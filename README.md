@@ -69,13 +69,17 @@ Lastly, combine the state with IV.
 Figure 8. All step of AES decryption
 
 ### Building and Running
-First, the program will ask for the type of the target file/s. Enter “1” if want to crypt a single .txt, enter “2” if want to crypt a folder.
-Then, it will ask for source and destination directories respectively. For folders, enter in the format "C:\Users\Desktop\". For files, do not forget to add .txt file extension. Spaces are not accepted.
-Then the program will ask for the operating mode: For encryption, type "1" and enter.  For decryption, type "2" and enter.
-Lastly, it will ask for the key. Key should be in plain text format.
-This program was developed in Dev-C++ environment.
+First, the program will ask for the type of the target file(s). Enter "1" if you want to encrypt a single .txt file, or enter "2" if you want to encrypt a folder.
+
+Next, it will prompt you to enter the source and destination directories. For folders, please enter the format as "C:\Users\Desktop". For files, remember to include the .txt file extension. Spaces are not accepted.
+
+After that, the program will ask for the operating mode: enter "1" for encryption or "2" for decryption.
+
+Finally, it will prompt you to enter the encryption/decryption key. The key should be in plain text format.
+
+Please note that this program was developed in the Dev-C++ environment.
 
 ### Discussion
-This program assumes that the key is entered in plain text form, it works fine when that is the case. When the key is entered in hexadecimal form, the program can encrypt, and retrieve the encrypted file by decrypting it. But the encrypted text will not match with online aes tools. So, prefer plain text keys.
-The program leaves padding at the end of the text.
-ECB mode is easy to implement, but CBC is very complicated.
+This program assumes that the key is entered in plain text form. It works fine when the key is in plain text, and it can encrypt and retrieve the encrypted file by decrypting it. However, if the key is entered in hexadecimal form, the encrypted text may not match with online AES tools. Therefore, it is recommended to use plain text keys.
+
+The program may leave padding at the end of the text.
