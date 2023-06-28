@@ -593,33 +593,35 @@ int main(){
 	char destination[256];
 	
 	printf("What do you want to encrypt or decrypt? Enter 1 for file, 2 for directory: ");
-	while(1){   //Asking the user for input until they give a valid response
-    	scanf("%c",&dirorfile);
-    	if( dirorfile == '1' || dirorfile == '2') break;
+	while (1) {
+    	scanf("%d", &dirorfile);
+    	if (dirorfile == 1 || dirorfile == 2) {
+        break;
+    	}
     	printf("\nEnter a valid option: ");
 	}
 	
 	if(dirorfile==1){
 		printf("\nEnter the file location: ");
 		while(1){   //Asking the user for input until they give a valid response
-    		scanf("%s",sourceLocation);
+    		scanf(" %s",sourceLocation);
     		if(filechecker(sourceLocation) == 1 ) break;
     		printf("\nFile not found. Enter a valid directory: ");
 		}
 		printf("\nEnter the full path to store decrypted data (please don't forget to add .txt): ");
-		scanf("%s",destination);	//this does not check if the input is valid, because testing if it was a directory is HARD
+		scanf(" %s",destination);	//this does not check if the input is valid, because testing if it was a directory is HARD
 	}
 	
 	else if(dirorfile==2){
 			printf("\nEnter the directory location: ");
 		while(1){   //Asking the user for input until they give a valid response
-			scanf("%s",sourceLocation);
+			scanf(" %s",sourceLocation);
     		if(sourcedirchecker(sourceLocation) == 1 ) break;
     		printf("\nDirectory not found. Enter a valid directory: ");
 		}
 		printf("\nEnter the directory to store decrypted files: ");
 		while(1){   //Asking the user for input until they give a valid response
-    	scanf("%s",destination);
+    	scanf(" %s",destination);
     	if(sourcedirchecker(destination) == 1 ) break;
     	printf("Directory not found. Enter a valid directory:");
 		}
@@ -627,7 +629,7 @@ int main(){
 	
 	printf("\nEnter operation mode: 1 for encrypt / 2 for decrypt: ");
 	while(1){   //Asking the user for input until they give a valid response
-    	scanf("%d", &operationMode);
+    	scanf(" %d", &operationMode);
     	if(operationMode == 1 || operationMode == 2) break;
     	printf("\nEnter a valid operation mode, 1 or 2.\n");
 	}
