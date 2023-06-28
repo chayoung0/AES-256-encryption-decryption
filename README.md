@@ -1,7 +1,7 @@
 # AES-256-encryption-decryption
 ### Implementation of AES 256 encryption algorithm with C. 
 
-![ezgif com-video-to-gif (1)](https://github.com/chayoung0/AES-256-encryption-decryption/assets/79144571/9ee07c75-1e37-4b52-8f11-da2049651550)
+![ezgif com-video-to-gif (1)](https://github.com/chayoung0/AES-256-encryption-decryption/assets/79144571/2f49568a-a8a5-416e-ba12-b8f685925c50)
 
 
 #### Building and Running
