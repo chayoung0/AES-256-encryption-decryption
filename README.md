@@ -1,6 +1,9 @@
 # AES-256-encryption-decryption
 ### Implementation of AES 256 encryption algorithm with C. 
 
+![ezgif com-video-to-gif (1)](https://github.com/chayoung0/AES-256-encryption-decryption/assets/79144571/9ee07c75-1e37-4b52-8f11-da2049651550)
+
+
 #### Building and Running
 First, the program will ask for the type of the target file(s). Enter "1" if you want to encrypt a single .txt file, or enter "2" if you want to encrypt a folder.
 
