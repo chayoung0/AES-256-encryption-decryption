@@ -6,23 +6,23 @@
 
 unsigned char iv[17];
 
-void keyExpansionCore(unsigned char *word, int iteration){
+void keyExpansionCore(unsigned char* word, int iteration){
 	
 	// rotate 8 bits to the left
 	unsigned char temp = word[0];
-	word[0]=word[1];
-	word[1]=word[2];
-	word[2]=word[3];
-	word[3]=temp;
+	word[0] = word[1];
+	word[1] = word[2];
+	word[2] = word[3];
+	word[3] = temp;
 	
 	// sbox substitution
-	word[0]=sbox[word[0]];
-	word[1]=sbox[word[1]];
-	word[2]=sbox[word[2]];
-	word[3]=sbox[word[3]];
+	word[0] = sbox[word[0]];
+	word[1] = sbox[word[1]];
+	word[2] = sbox[word[2]];
+	word[3] = sbox[word[3]];
 	
 	// XORing with round constant
-	word[0]^=Rcon[iteration];
+	word[0] ^= Rcon[iteration];
 }
 
 void KeyExpansion(unsigned char *expandedKey, unsigned char *key){
@@ -73,8 +73,7 @@ void KeyExpansion(unsigned char *expandedKey, unsigned char *key){
 void generateIV(unsigned char* iv){
 	//generating initial vector
 	srand(time(NULL));
-	int i;
- 	for(i=0; i<16;i++)
+ 	for(int i=0; i<16; i++)
 		iv[i]=rand()%16;
 	
 }

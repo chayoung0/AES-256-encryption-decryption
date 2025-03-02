@@ -8,13 +8,13 @@ CFLAGS = -Wall -g
 TARGET = zer0day
 
 # Source files (add all your .c files here)
-SRCS = main.c aes_core.c aes_key.c file_handling.c ui.c
+SRCS = main.c aes_core.c aes_key.c file_handling.c cli.c
 
 # Object files (automatically generated from source files)
 OBJS = $(SRCS:.c=.o)
 
 # Default target
-all: $(TARGET)
+all: $(TARGET) clean
 
 # Link object files to create executable
 $(TARGET): $(OBJS)

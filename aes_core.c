@@ -3,20 +3,18 @@
 
 #include <string.h>
 
-unsigned char previousState[17];
+unsigned char previousState[16];
 
 void AddRoundKey(unsigned char *state, unsigned char *roundKey){
-	//XORing state with round key
-	int i;
-	for(i=0; i<16; i++){
+	//XORing the state with the round key
+	for(int i = 0; i < 16; i++){
 		state[i] ^= roundKey[i];
 	}
 }
 
 void SubBytes(unsigned char *state){ 
 	//substitute bytes from rijndael s-box
-	int i;
-	for(i=0; i<16; i++){
+	for(int i = 0; i < 16; i++){
 		state[i]=sbox[state[i]];
 	}
 }
@@ -25,30 +23,35 @@ void ShiftRows(unsigned char *state){
 	
 	unsigned char temp[16];
 	
+	// First row - no shift
 	temp[0] = state[0];
 	temp[1] = state[5];
 	temp[2] = state[10];
 	temp[3] = state[15];
 	
+	// Second row - shift by 1
 	temp[4] = state[4];
 	temp[5] = state[9];
 	temp[6] = state[14];
 	temp[7] = state[3];
 	
+	// Third row - shift by 2
 	temp[8] = state[8];
 	temp[9] = state[13];
 	temp[10] = state[2];
 	temp[11] = state[7];
 	
+	// Fourth row - shift by 3
 	temp[12] = state[12];
 	temp[13] = state[1];
 	temp[14] = state[6];
 	temp[15] = state[11];
-	
-	int i;
-	for(i=0; i<16; i++){
+
+	memcpy(state, temp, 16);
+	/*
+	for(int i=0; i<16; i++){
 		state[i]=temp[i];
-	}
+	}*/
 	
 }
 
@@ -84,18 +87,18 @@ void MixColumns(unsigned char *state){
 	tmp[14] = (unsigned char)(state[12] ^ state[13] ^ mul2[state[14]] ^ mul3[state[15]]);
 	tmp[15] = (unsigned char)(mul3[state[12]] ^ state[13] ^ state[14] ^ mul2[state[15]]);
  
- 	int i;
- 	for(i=0; i<16; i++){
- 		state[i]=tmp[i];
-	 }
+ 	memcpy(state, tmp, 16);
+	/*
+	for(int i=0; i<16; i++){
+		state[i]=temp[i];
+	}*/
 	
 }
 
 void InvSubBytes(unsigned char *state){
 	//substitute bytes from the reverse s-box
-	int i;
-	for(i=0; i<16; i++){
-		state[i]=rs_box[state[i]];
+	for(int i = 0; i < 16; i++){
+		state[i] = rs_box[state[i]];
 	}
 }
 
@@ -115,30 +118,35 @@ void InvShiftRows(unsigned char *state){
 	
 	unsigned char temp[16];
 	
+	// First row - no shift
 	temp[0] = state[0];
 	temp[1] = state[13];
 	temp[2] = state[10];
 	temp[3] = state[7];
 	
+	// Second row - shift right by 1
 	temp[4] = state[4];
 	temp[5] = state[1];
 	temp[6] = state[14];
 	temp[7] = state[11];
 	
+	// Third row - shift right by 2
 	temp[8] = state[8];
 	temp[9] = state[5];
 	temp[10] = state[2];
 	temp[11] = state[15];
 	
+	// Fourth row - shift right by 3
 	temp[12] = state[12];
 	temp[13] = state[9];
 	temp[14] = state[6];
 	temp[15] = state[3];
 	
-	int i;
-	for(i=0; i<16; i++){
+	memcpy(state, temp, 16);
+	/*
+	for(int i=0; i<16; i++){
 		state[i]=temp[i];
-	}
+	}*/
 	
 }
 
@@ -173,20 +181,21 @@ void InvMixColumns(unsigned char *state){
 	tmp[14] = (unsigned char)(mul13[state[12]] ^ mul9[state[13]] ^ mul14[state[14]] ^ mul11[state[15]]);
 	tmp[15] = (unsigned char)(mul11[state[12]] ^ mul13[state[13]] ^ mul9[state[14]] ^ mul14[state[15]]);
  
- 	int i;
- 	for(i=0; i<16; i++){
- 		state[i]=tmp[i];
-	 }
+ 	memcpy(state, tmp, 16);
+	/*
+	for(int i=0; i<16; i++){
+		state[i]=temp[i];
+	}*/
 }
 
-void encrypt(unsigned char *textPortion, unsigned char *key){	// The actual encrypting function
+void encrypt(unsigned char *textPortion, unsigned char *key){
 	
-	int numberOfRounds = 14-1;
+	// int numberOfRounds = 13;
 	
 	//copying the 16 byte text to state matrix
 	unsigned char state[16];
-	int i;
- 	for(i=0; i < 16; i++)
+
+ 	for(int i=0; i < 16; i++)
         state[i] = textPortion[i];
         
     /*
@@ -206,14 +215,16 @@ void encrypt(unsigned char *textPortion, unsigned char *key){	// The actual encr
 	
 	KeyExpansion(expandedKey, key);	//Key expansion step of the aes
 	
-	AddRoundKey(state, expandedKey); //initial round
+	// initial round
+	AddRoundKey(state, expandedKey);
 	
-	//rounds
-	for(i=1;i<=numberOfRounds;i++){
-	SubBytes(state); 
-	ShiftRows(state);
-	MixColumns(state);
-	AddRoundKey(state, expandedKey + 16*i); //Every round uses different key. Because keys are 16 bytes length, I increment the pointer by 16 in each round.
+	// main rounds
+	for(int round = 1; round <= 13; round++){
+		SubBytes(state); 
+		ShiftRows(state);
+		MixColumns(state);
+		AddRoundKey(state, expandedKey + 16*round); 
+		//Every round uses a different key. Because keys are 16 bytes length, I increment the pointer by 16 in each round.
 	}
 	
 	//final round
@@ -221,33 +232,28 @@ void encrypt(unsigned char *textPortion, unsigned char *key){	// The actual encr
 	ShiftRows(state);
 	AddRoundKey(state, expandedKey + 224);  
 	
-	for (i = 0; i < 16; i++)	//copying the state to text
-        textPortion[i] = state[i];
-	
+	memcpy(textPortion, state, 16); //copying the state to text
 	memcpy(previousState, state, 16);
 }
 
-void decrypt(unsigned char* encryptedText, unsigned char* key){	// The actual decrypting function
+void decrypt(unsigned char* encryptedText, unsigned char* key){
 	
-	int numberOfRounds = 13;
-	
+	// int numberOfRounds = 13;
 	unsigned char state[16];
-	int i;
-	for (i = 0; i < 16; i++){
-        state[i] = encryptedText[i];
-	}
-        
 	unsigned char expandedKey[240];
+
+	memcpy(state, encryptedText, 16);
 	
 	KeyExpansion(expandedKey, key);
 	
+	// initial round
 	AddRoundKey(state, expandedKey + 224); 
 	InvShiftRows(state);
 	InvSubBytes(state);
 	
-	//rounds
-	for(i=13;i>=1;i--){
-		AddRoundKey(state, expandedKey + (16*i)); //Here, the steps proceed in the reverse order of encrypting. AddRoundKey remains the same.
+	// main rounds
+	for(int round = 13; round >= 1; round--){
+		AddRoundKey(state, expandedKey + (16*round)); //Here, the steps proceed in the reverse order of encrypting. AddRoundKey remains the same.
 		InvMixColumns(state);						// But for other steps, inversed version of the functions are needed.
 		InvShiftRows(state);
 		InvSubBytes(state); 
@@ -260,7 +266,9 @@ void decrypt(unsigned char* encryptedText, unsigned char* key){	// The actual de
 /*	for(int i=0; i<16; i++) 
 		state[i] ^= iv[i];
 */	
-	for (i = 0; i < 16; i++)
-        encryptedText[i] = state[i];
+	
+	/*for(int i = 0; i < 16; i++)
+        encryptedText[i] = state[i];*/
+	memcpy(encryptedText, state, 16);
 	
 }

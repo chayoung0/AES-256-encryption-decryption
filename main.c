@@ -10,7 +10,6 @@ https://www.youtube.com/watch?v=5PHMbGr8eOA
 
 */
 
-
 #include <stdlib.h>
 #include <stdint.h>
 #include <ctype.h>
@@ -18,7 +17,7 @@ https://www.youtube.com/watch?v=5PHMbGr8eOA
 
 #include "aes.h"
 #include "file_handling.h"
-#include "ui.h"
+#include "cli.h"
 
 /*int keyChecker(char* key){	//checks if the input key is in valid format. 
 	
@@ -33,44 +32,32 @@ https://www.youtube.com/watch?v=5PHMbGr8eOA
 	return 1;
 }*/
 
-
-
-
-
-
 int main(){
 	
-	print_logo();
+	unsigned char key[32] = ""; // 32 bytes = 256 bits
+	// Corrected in second version!! You don't need null terminator for unsigned chars. Array size changed 33 -> 32.
 	
-	unsigned char key[33] = ""; //as plaintext
-	
-	int dirorfile;
-	int operationMode;
 	char sourceLocation[256];
 	char destination[256];
+
+	system("cls");
+    int operation_mode = display_menu();
+
+    printf("selected option is: %d", operation_mode);
 	
-	printf("What do you want to encrypt or decrypt? Enter 1 for file, 2 for directory: ");
-	while (1) {
-    	scanf("%d", &dirorfile);
-    	if (dirorfile == 1 || dirorfile == 2) {
-        break;
-    	}
-    	printf("\nEnter a valid option: ");
-	}
-	
-	if(dirorfile==1){
+	if (operation_mode == 0 || operation_mode == 2){
 		printf("\nEnter the file location: ");
 		while(1){   //Asking the user for input until they give a valid response
     		scanf(" %s",sourceLocation);
     		if(filechecker(sourceLocation) == 1 ) break;
     		printf("\nFile not found. Enter a valid directory: ");
 		}
-		printf("\nEnter the full path to store decrypted data (please don't forget to add .txt): ");
+		printf("\nEnter the full path to store encrypted data (don't forget to add .txt): ");
 		scanf(" %s",destination);	//this does not check if the input is valid, because testing if it was a directory is HARD
 	}
 	
-	else if(dirorfile==2){
-			printf("\nEnter the directory location: ");
+	else if (operation_mode == 1 || operation_mode == 3){
+		printf("\nEnter the directory location: ");
 		while(1){   //Asking the user for input until they give a valid response
 			scanf(" %s",sourceLocation);
     		if(sourcedirchecker(sourceLocation) == 1 ) break;
@@ -84,46 +71,33 @@ int main(){
 		}
 	}
 	
-	printf("\nEnter operation mode: 1 for encrypt / 2 for decrypt: ");
+	char text_key[33] = "";
+    unsigned char binary_key[32];
+	printf("\nEnter your key (up to 32 characters): ");
 	while(1){   //Asking the user for input until they give a valid response
-    	scanf(" %d", &operationMode);
-    	if(operationMode == 1 || operationMode == 2) break;
-    	printf("\nEnter a valid operation mode, 1 or 2.\n");
-	}
-	
-	printf("\nEnter your 256-bit plain text key: ");
-	while(1){   //Asking the user for input until they give a valid response
-		scanf("%32s", key);
-    	if( (sizeof(key)/sizeof(unsigned char) ) == 33 ) break;
+		scanf("%32s", text_key);
+    	if( (sizeof(key)/sizeof(unsigned char) ) == 32 ) break;
     	printf("\nInvalid key. Enter a valid key: ");
 	}
 	
+	system("cls");
 	startTime = clock();
-	operationdeck(sourceLocation,destination,key,dirorfile,operationMode);
+	switch(operation_mode){
+		case 0:
+			fileencryption(sourceLocation, destination, key);
+			break;
+		case 1:
+			directoryencrypt(sourceLocation, destination, key);
+			break;
+		case 2:
+			filedecryption(sourceLocation, destination, key);
+			break;
+		case 3:
+			directorydecrypt(sourceLocation, destination, key);
+			break;
+	}
 	
 	printf("\nTime elapsed: %.2f ms\n", endTime - startTime);
 	
 	return 0;
 }
-
-void operationdeck(char *location, char *destination, unsigned char *key, int dirorfile, int option){
-	system("cls");
-	if(dirorfile==1){//If choosen option crypt file this function works.
-		if(option==1){
-			fileencryption(location,destination,key);	
-		}
-		else if(option==2){
-			filedecryption(location,destination,key);
-		}
-	}
-	
-	else if(dirorfile==2){//If choosen option crypt directory this function works.
-		if(option==1){
-			directoryencrypt(location,destination,key);
-		}
-		else if(option==2){
-			directorydecrypt(location,destination,key);
-		}
-	}
-}
-

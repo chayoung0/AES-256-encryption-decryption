@@ -15,7 +15,6 @@ void filedecryption(char *location, char *destination, unsigned char *key);
 void directoryencrypt(char *location, char *destination,unsigned char *key);
 void directorydecrypt(char *location, char *destination,unsigned char *key);
 void locationgenerator(char *location, char *destination, char *filenm, char *sourceloc, char *destloc, int operationMode);
-void operationdeck(char *location, char *destination,unsigned char *key, int dirorfile, int option);
 int sourcedirchecker(char *location);
 int filechecker(char *location);
 int directoryChecker(char *location);

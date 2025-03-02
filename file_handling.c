@@ -1,8 +1,7 @@
 #include "file_handling.h"
 #include "aes.h"
 
-
-
+#include <string.h>
 
 double startTime, endTime;
 
@@ -78,8 +77,8 @@ void fileencryption(char *location, char *destination, unsigned char *key){
 	
 	FILE *loc,*dest;
 	
-	loc=fopen(location,"r");
-	dest=fopen(destination,"w");
+	loc=fopen(location,"rb");
+	dest=fopen(destination,"wb");
 	
 	if(loc==NULL){
 		printf("CAN NOT OPEN THIS FILE: %s\n",location);
@@ -175,8 +174,8 @@ void filedecryption(char *location, char *destination, unsigned char *key){
 	
 	FILE *loc,*dest;
 	
-	loc=fopen(location,"r");
-	dest=fopen(destination,"w");
+	loc=fopen(location,"rb");
+	dest=fopen(destination,"wb");
 	
 	if(loc==NULL){
 		printf("CAN NOT OPEN THIS FILE: %s\n",location);

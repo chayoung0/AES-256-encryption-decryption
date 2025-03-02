@@ -4,7 +4,7 @@
 ![ezgif com-video-to-gif (1)](https://github.com/chayoung0/AES-256-encryption-decryption/assets/79144571/2f49568a-a8a5-416e-ba12-b8f685925c50)
 
 
-#### Building and Running
+## Building and Running
 First, the program will ask for the type of the target file(s). Enter "1" if you want to encrypt a single .txt file, or enter "2" if you want to encrypt a folder.
 
 Next, it will prompt you to enter the source and destination directories. For folders, please enter the format as "C:\Users\Desktop". For files, remember to include the .txt file extension. Spaces are not accepted.
@@ -15,7 +15,7 @@ Finally, it will prompt you to enter the encryption/decryption key. The key shou
 
 Please note that this program was developed in the Dev-C++ environment.
 
-#### Implementation
+## Implementation
 
 AES-256 uses a 256-bit key to encrypt a 128-bit text. If the text is larger than 128 bits, it is divided into 128-bit pieces, and each piece is encrypted one by one. The encryption process consists of 14 rounds.
 
@@ -29,12 +29,13 @@ In CBC mode, a 128-bit random initialization vector (IV) is generated. This IV i
 Figure 1. Combining the plain text with IV
 
 In the initial round, the state is XORed with the round key, which corresponds to the first 16 bytes of the expanded key array.
+
 ![image](https://github.com/chayoung0/AES-256-encryption-decryption/assets/79144571/9505379f-6c51-422e-8015-fe6cfbfd6566)
 
 Figure 2. Add Round Key step algorithm
 
-#### Round Steps
-##### Sub Bytes Step: Each element of the state array is replaced by the corresponding value in the Rijndael S-box (S is for substitution). For example, if the value in state[i] is equal to 0x2A, the corresponding value in the S-box is found at the 2nd row and the 10th column, which is 0xE5.
+### Round Steps
+ **Sub Bytes Step:** Each element of the state array is replaced by the corresponding value in the Rijndael S-box (S is for substitution). For example, if the value in state[i] is equal to 0x2A, the corresponding value in the S-box is found at the 2nd row and the 10th column, which is 0xE5.
 
 ![image](https://github.com/chayoung0/AES-256-encryption-decryption/assets/79144571/f3d4b9ae-4988-4662-a247-1d0a350a6b4e)
 
@@ -42,13 +43,13 @@ Figure 2. Add Round Key step algorithm
 
 Figure 3. Replace state’s elements using Sbox.
 
-##### Shift Rows Step: The second, third, and fourth rows are shifted to the right by 1, 2, and 3 positions, respectively. The first row remains unchanged.
+**Shift Rows Step:** The second, third, and fourth rows are shifted to the right by 1, 2, and 3 positions, respectively. The first row remains unchanged.
 
 ![image](https://github.com/chayoung0/AES-256-encryption-decryption/assets/79144571/fb5b1897-9d21-4de7-b858-885313b13318)
 
 Figure 4. Shift rows step algorithm.
 
-##### Mix Columns Step: This step involves advanced mathematical calculations. To simplify it, the state matrix is multiplied by a matrix as follows:
+**Mix Columns Step:** This step involves advanced mathematical calculations. To simplify it, the state matrix is multiplied by a matrix as follows:
 
 ![image](https://github.com/chayoung0/AES-256-encryption-decryption/assets/79144571/a7034f7d-441b-4291-8c54-2e9f64b3cc03)
 
