@@ -1,19 +1,22 @@
 # AES-256-encryption-decryption
 ### Implementation of AES 256 encryption algorithm with C. 
 
-![ezgif com-video-to-gif (1)](https://github.com/chayoung0/AES-256-encryption-decryption/assets/79144571/2f49568a-a8a5-416e-ba12-b8f685925c50)
+![son-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/bfdbbe67-68af-44b7-b636-b00046e1cfab)
 
 
 ## Building and Running
-First, the program will ask for the type of the target file(s). Enter "1" if you want to encrypt a single .txt file, or enter "2" if you want to encrypt a folder.
 
-Next, it will prompt you to enter the source and destination directories. For folders, please enter the format as "C:\Users\Desktop". For files, remember to include the .txt file extension. Spaces are not accepted.
+This program provides a command-line interface for encrypting and decrypting files or directories using a user-provided key.
 
-After that, the program will ask for the operating mode: enter "1" for encryption or "2" for decryption.
+1. The program displays a menu where you can navigate using the UP/DOWN arrow keys and select an option with ENTER.
+2. Specify source and destination
+    - If you choose to encrypt or decrypt a file, enter the file path. Ensure the destination file has a .txt extension.
+    - If you choose to encrypt or decrypt a directory, enter the directory path.
+    - Provide the output path for storing the processed files.
+    - Input paths should not contain spaces.
+3. Enter a encryption/decryption key up to 32 characters long. The program validates the key input.
 
-Finally, it will prompt you to enter the encryption/decryption key. The key should be in plain text format.
-
-Please note that this program was developed in the Dev-C++ environment.
+:memo: The program was developed in Windows environment and uses Windows-specific functions. Adaptations may be required for other platforms.
 
 ## Implementation
 
