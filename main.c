@@ -42,8 +42,6 @@ int main(){
 
 	system("cls");
     int operation_mode = display_menu();
-
-    printf("selected option is: %d", operation_mode);
 	
 	if (operation_mode == 0 || operation_mode == 2){
 		printf("\nEnter the file location: ");
@@ -74,6 +72,8 @@ int main(){
 	char text_key[33] = "";
     unsigned char binary_key[32];
 	printf("\nEnter your key (up to 32 characters): ");
+
+	// TODO make the input key invisible
 	while(1){   //Asking the user for input until they give a valid response
 		scanf("%32s", text_key);
     	if( (sizeof(key)/sizeof(unsigned char) ) == 32 ) break;
@@ -98,6 +98,9 @@ int main(){
 	}
 	
 	printf("\nTime elapsed: %.2f ms\n", endTime - startTime);
+
+	printf("\nPress any key to exit...");
+	_getch();  // Waits for key press
 	
 	return 0;
 }

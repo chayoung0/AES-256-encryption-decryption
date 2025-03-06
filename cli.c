@@ -17,8 +17,9 @@ void gotoxy(short x, short y) {
 }
 
 void progressBar(int size, int rowcounter){
-	system("cls");
 	
+	// TODO center the progress bar dynamically
+
 	float percentage = (rowcounter*1600/size);
 	
 	if((rowcounter+1)==(size/16))
@@ -38,6 +39,7 @@ void progressBar(int size, int rowcounter){
 		printf("%c", 178);
 	}
 	gotoxy(30,12);
+
 }
 
 int display_menu(){
